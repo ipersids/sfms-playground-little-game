@@ -1,21 +1,16 @@
-#include <SFML/Graphics.hpp>
+#include "../include/window.hpp"
 
 int main()
 {
-    auto window = sf::RenderWindow({1920u, 1080u}, "CMake SFML Project");
-    window.setFramerateLimit(144);
-
-    while (window.isOpen())
-    {
-        for (auto event = sf::Event(); window.pollEvent(event);)
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        window.clear();
-        window.display();
+    // init window
+    Window window;
+    
+    while (!window.isDone()) {
+        // clear the frame
+        window.Clear();
+        // handle events: 'F5', 'esc' and 'close'
+        window.Update();
+        // display the window
+        window.Display();
     }
 }
