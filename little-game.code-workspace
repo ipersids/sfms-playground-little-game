@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "Little Game",
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.tabSize": 2
+	}
+}
