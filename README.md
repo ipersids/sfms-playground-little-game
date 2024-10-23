@@ -45,6 +45,7 @@ git clone https://github.com/ipersids/sfms-playground-little-game.git
 ```
 2. **Build the project:**
     - Make sure you have `CMake` and a C++ compiler installed.
+    - Cmake will fetch dependencies: SFML and Box2D libraries.
     - Configure the build:
 
     ```bash
@@ -77,6 +78,67 @@ git clone https://github.com/ipersids/sfms-playground-little-game.git
 <p></p>
 
 3. **The resulting executable** will be placed in the `build/bin/` directory.
+
+### Game Architecture
+
+#### Modules, classes and diagrams.  
+
+**Module `Game Loop`:**  
+
+- **Class `Game`:** functions as the game engine, handling all the main tasks required for the game loop. This class checks the positions of game objects, detects interactions and collisions, updates the objects accordingly, and finally renders a new frame. Additionally, it controls the frame rate, capped at 60 FPS.  
+
+- **Class `Window`:** is responsible for window initialization and settings. It contains helper functions used by the Game class, manages opening and closing the window, and handles user input (e.g., tapping to close the window, fullscreen mode).  
+
+<details>
+
+<summary><b>Game loop</b></summary>
+
+```mermaid
+---
+title: Little Game
+---
+classDiagram
+direction 
+namespace GameLoop {
+    class Game {
+        +Game()
+		+~Game()
+		+HandleInput() void
+		+Update() void
+		+Render() void
+		+GetWindow() Window**
+        -MoveCharacter() void
+        -Window _window;
+		-sf::Texture _texture;
+		-sf::Sprite _character;
+		-sf::Vector2i _increment;
+    }
+    class Window {
+        +Window()
+		+Window(const std::string& title, const sf::Vector2u& size)
+		+~Window()
+        +StartDraw() void
+		+Update() void
+		+Draw(sf::Drawable& drawable) void
+        +EndDraw() void
+        +isClosed() bool
+		+isFullscreen() bool
+		+GetWindowSize() sf::Vector2u
+		+SwitchFullscreen(bool mode) void
+        -SetUp(const std::string& title, const sf::Vector2u& size) void
+		-Destroy() void
+		-Create() void
+        -sf::RenderWindow _window;
+		-sf::Vector2u _size;
+		-std::string _title;
+		-bool _isDone;
+		-bool _isFullscreen;
+    }
+}
+Game ..> Window : Dependency
+```
+
+</details>
 
 ____
 Made by Julia Persidskaia  
