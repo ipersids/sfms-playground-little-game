@@ -1,6 +1,7 @@
-# SFML playground
+# SFML and Box2D playground
 ## Little Game
-This repository is my space to explore the features of [SFML (Simple and Fast Multimedia Library)](https://www.sfml-dev.org/index.php), a library used for the development of games and multimedia applications.  
+This repository is my space to explore the features of [SFML (Simple and Fast Multimedia Library)](https://www.sfml-dev.org/index.php), a library used for the development of games and multimedia applications, and [Box2D physics engine for games](https://box2d.org/documentation/index.html).
+
 
 ## Project Structure
 Below is an overview of the project's directory structure. The project is currently ongoing, and this information will be updated as development progresses.  
@@ -9,7 +10,7 @@ Below is an overview of the project's directory structure. The project is curren
 sfml-playground/
 │
 ├── build/                      # Build output dir will be created via CMake
-│   ├── _deps/                  # External dependencies: SFML
+│   ├── _deps/                  # External dependencies: SFML, Box2D
 │   ├── ...                     # Any build-related files
 │   └── bin/main                # Compiled executable
 │
@@ -78,5 +79,5 @@ git clone https://github.com/ipersids/sfms-playground-little-game.git
 3. **The resulting executable** will be placed in the `build/bin/` directory.
 
 ____
-Made by Julia Persidskaia
+Made by Julia Persidskaia  
 [LinkedIn](https://www.linkedin.com/in/iuliia-persidskaia/)
