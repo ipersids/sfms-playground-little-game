@@ -37,7 +37,11 @@ FetchContent_MakeAvailable(box2d)
 # ------------------------------------------------------ #
 
 # add all .cpp, - files under src/ directory
-file(GLOB SOURCES_CPP "src/*.cpp")
+# file(GLOB SOURCES_CPP "src/")
+file(GLOB SOURCES_CPP
+    "${CMAKE_SOURCE_DIR}/src/*/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+)
 # add all .hpp files from multiple directories
 set(SOURCES_HPP
     "${CMAKE_SOURCE_DIR}/build/_deps/sfml-src/include"          # SFML headers
