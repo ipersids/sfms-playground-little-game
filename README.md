@@ -15,12 +15,20 @@ sfml-playground/
 │   └── bin/main                # Compiled executable
 │
 ├── include/                    # Header files
+│   ├── game.hpp 
+│   ├── ... 
 │   └── window.hpp          
 │
 ├── src/                        # Source files
-│   ├── main.cpp 
-│   └── window.cpp
+│   ├── core/ 
+│   │    ├── game.cpp
+│   │    ├── physic-world.cpp
+│   │    ├── physic-object.cpp
+│   │    └── window.cpp
+│   ├── constants.cpp
+│   └── main.cpp 
 │
+├── assets/                     # Images
 ├── CMakeLists.txt              # CMake configuration file for building the project
 ├── LICENSE.md
 ├── README.md
@@ -79,63 +87,72 @@ git clone https://github.com/ipersids/sfms-playground-little-game.git
 
 3. **The resulting executable** will be placed in the `build/bin/` directory.
 
-### Game Architecture
+### Architecture
 
-#### Modules, classes and diagrams.  
+<details>  
 
-**Module `Game Loop`:**  
-
-- **Class `Game`:** functions as the game engine, handling all the main tasks required for the game loop. This class checks the positions of game objects, detects interactions and collisions, updates the objects accordingly, and finally renders a new frame. Additionally, it controls the frame rate, capped at 60 FPS.  
-
-- **Class `Window`:** is responsible for window initialization and settings. It contains helper functions used by the Game class, manages opening and closing the window, and handles user input (e.g., tapping to close the window, fullscreen mode).  
-
-<details>
-
-<summary><b>Game loop</b></summary>
+<summary><b>Game Core Module</b></summary>
 
 ```mermaid
----
-title: Little Game
----
 classDiagram
 direction 
-namespace GameLoop {
+direction RL
+namespace GameCore {
     class Game {
         +Game()
-		+~Game()
-		+HandleInput() void
-		+Update() void
-		+Render() void
-		+GetWindow() Window**
-        -MoveCharacter() void
-        -Window _window;
-		-sf::Texture _texture;
-		-sf::Sprite _character;
-		-sf::Vector2i _increment;
+        +Game(std::unique_ptr<Window> window, std::unique_ptr<PhysicsWorld> world)
+        +~Game()
+        +loadObject(const PhysicsBodyConfig& config) void 
+        +loadObject(std::unique_ptr<PhysicObject> object) void 
+        +run() void 
+        +getWorldId() const std::unique_ptr<PhysicsWorld> 
+
+        -std::unique_ptr<Window> _window
+		-std::unique_ptr<PhysicsWorld> _physicsWorld
+		-std::vector<std::unique_ptr<PhysicObject>> _characters
+
+		-update() void 
+		-render() void 
+		-processEvents() void 
     }
     class Window {
-        +Window()
-		+Window(const std::string& title, const sf::Vector2u& size)
-		+~Window()
-        +StartDraw() void
-		+Update() void
-		+Draw(sf::Drawable& drawable) void
-        +EndDraw() void
-        +isClosed() bool
-		+isFullscreen() bool
-		+GetWindowSize() sf::Vector2u
-		+SwitchFullscreen(bool mode) void
-        -SetUp(const std::string& title, const sf::Vector2u& size) void
-		-Destroy() void
-		-Create() void
-        -sf::RenderWindow _window;
-		-sf::Vector2u _size;
-		-std::string _title;
-		-bool _isDone;
-		-bool _isFullscreen;
+        +Window(...)
+        +~Window()
+        +startDraw() void
+		+draw(sf::Drawable& drawable) void
+		+endDraw() void
+		+closeWindow() void
+        +getStatus() bool 
+		+setStatus(bool isopen) void 
+		+GetWindowSize() sf::Vector2u 
+		+getRenderWindow() sf::RenderWindow& 
+
+        -sf::RenderWindow _window
+		-bool _isOpen
+    }
+    class PhysicObject {
+        +PhysicObject(const b2WorldId& world, const PhysicsBodyConfig& config)
+		+~PhysicObject()
+		+update() void 
+		+draw(sf::RenderWindow& window) void 
+		+getSprite() sf::Sprite&
+        
+		-b2BodyId _body
+		-sf::Sprite _sprite
+		-sf::Texture _texture
+    }
+    class PhysicsWorld {
+        +PhysicsWorld(const PhysicsWorldConfig& config = DEFAULTPHYSCONFIG)
+		+~PhysicsWorld()
+		+step() void
+		+getWorldId() const b2WorldId* 
+		+getPhysicsWorldConfig() const PhysicsWorldConfig* 
+
+        -b2WorldId _world
+		-PhysicsWorldConfig _config
+		-createWorld(float gravityX, float gravityY) void 
     }
 }
-Game ..> Window : Dependency
 ```
 
 </details>
