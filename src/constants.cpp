@@ -1,11 +1,9 @@
-#pragma once
-
 #include "constants.hpp"
 
 const unsigned int SCREEN_WIDTH = 1366;
 const unsigned int SCREEN_HEIGHT = 768;
 const char* GAMENAME = "Little Game";
-const float PTM_RATIO = 32.0f;
+const float PTM_RATIO = 30.0f;
 const float WORLD_WIDTH = (float)SCREEN_WIDTH / PTM_RATIO;
 const float WORLD_HEIGHT = (float)SCREEN_HEIGHT / PTM_RATIO;
 const float TIME_STEP = 1.0f / 60.0f;

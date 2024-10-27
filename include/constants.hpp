@@ -29,7 +29,7 @@ struct PhysicsWorldConfig {
 };
 
 struct PhysicsBodyConfig {
-	sf::Texture texture;
+	std::string texturePath;
 	b2BodyType type;
 	b2Vec2 position;
 	float density;
