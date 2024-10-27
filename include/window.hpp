@@ -2,44 +2,34 @@
 
 #include <string>
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-// #include <SFML/Audio.hpp>
-// #include <SFML/Network.hpp>
-// #include <SFML/System.hpp>
+#include "constants.hpp"
 
-#define GAMENAME "Little Game"
+namespace GameCore {
 
 class Window {
 	public:
-		// constructors
-		Window();
-		Window(const std::string& title,
-			const sf::Vector2u& size);
-		// destructor
-		~Window();
+		explicit Window(const sf::VideoMode& mode = sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
+                		const std::string& title = GAMENAME);
+  	~Window();
+
+		// Prevent copying
+		Window(const Window&) = delete;
+		Window& operator=(const Window&) = delete;
 
 		// public functions
-		void Clear();
-		void Display();
-		void Update();
-		void Draw(sf::Drawable& drawable);
+		void startDraw();
+		void draw(sf::Drawable& drawable);
+		void endDraw();
+		void closeWindow();
 
-		bool isDone() ;
-		bool isFullscreen() ;
-		sf::Vector2u GetWindowSize() ;
-		void SwitchFullscreen(bool mode);
+		bool getStatus();
+		void setStatus(bool isopen);
+		sf::Vector2u GetWindowSize();
+		sf::RenderWindow& getRenderWindow();
 
 	private:
-		// handle setting up the window
-		void SetUp(const std::string& title,
-			const sf::Vector2u& size);
-		void Destroy();
-		void Create();
-		// variables
 		sf::RenderWindow _window;
-		sf::Vector2u _size;
-		std::string _title;
-		bool _isDone;
-		bool _isFullscreen;
+		bool _isOpen;
 };
+
+} // namespace GameCore
