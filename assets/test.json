@@ -1,0 +1,30 @@
+{
+	"level 1": {
+		"static": [
+			{
+				"name": "background",
+				"texture_path": "assets/kenney_background/Backgrounds/backgroundForest.png",
+				"x": 0,
+				"y": 0,
+				"width": 1024,
+				"height": 1024
+			},
+			{
+				"name": "item",
+				"texture_path": "assets/kenney_background/PNG/Default/sun.png",
+				"x": 80,
+				"y": 60,
+				"width": 84,
+				"height": 84
+			},
+			{
+				"name": "ground",
+				"texture_path": "assets/kenney_toy/PNG/Default/Special/extra_dirt_top.png",
+				"x": 0,
+				"y": 0,
+				"width": 64,
+				"height": 64
+			}
+		]
+	}
+}
