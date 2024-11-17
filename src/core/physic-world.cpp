@@ -21,7 +21,7 @@ void PhysicsWorld::createWorld(float gravityX=0, float gravityY=-9.8) {
 	b2WorldDef worldDef = b2DefaultWorldDef();
 	worldDef.gravity = (b2Vec2){gravityX, gravityY};
 	worldDef.enableSleep = true;
-	worldDef.enableContinuous = true;
+	worldDef.enableContinous = true;
 	_world = b2CreateWorld(&worldDef);
 	if (!b2World_IsValid(_world)) {
 		throw std::runtime_error("Failed to create physics world");
