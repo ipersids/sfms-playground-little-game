@@ -25,14 +25,23 @@ FetchContent_Declare(SFML
 )
 FetchContent_MakeAvailable(SFML)
 
-# fetching Box2D main version from GitHub
+# fetching Box2D last version from GitHub
 FetchContent_Declare(box2d
 	GIT_REPOSITORY https://github.com/erincatto/box2d.git
-	GIT_TAG main
+	GIT_TAG v3.0.0
 	GIT_SHALLOW TRUE
 	GIT_PROGRESS TRUE
 )
 FetchContent_MakeAvailable(box2d)
+
+# fetching nlohmann/json v3.11.x version from GitHub
+FetchContent_Declare(nlohmann_json
+	GIT_REPOSITORY https://github.com/nlohmann/json.git
+	GIT_TAG v3.11.3
+	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 # ------------------------------------------------------ #
 
@@ -47,7 +56,9 @@ set(SOURCES_HPP
     "${CMAKE_SOURCE_DIR}/build/_deps/sfml-src/include"          # SFML headers
     "${CMAKE_SOURCE_DIR}/include"                               # project headers
     "${CMAKE_SOURCE_DIR}/build/_deps/box2d-src/include/box2d"   # Box2D headers
-    "build/_deps/box2d-src/src"
+    "build/_deps/box2d-src/src"                                 # Box2D headers
+    "${CMAKE_SOURCE_DIR}/build/_deps/json-src/include"          # nlohmann/json headers
+    "${CMAKE_SOURCE_DIR}/build/_deps/json-src/single_include"   # nlohmann/json headers
 )
 
 message(
@@ -59,7 +70,7 @@ message(
 add_executable(main)
 target_sources(main PUBLIC ${SOURCES_CPP})
 target_include_directories(main PRIVATE ${SOURCES_HPP})
-target_link_libraries(main PRIVATE sfml-graphics sfml-window sfml-audio sfml-network box2d)
+target_link_libraries(main PRIVATE sfml-graphics sfml-window sfml-audio sfml-network box2d nlohmann_json)
 target_compile_features(main PRIVATE cxx_std_17)
 
 # get a lot of warnings
